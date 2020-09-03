@@ -1,2 +1,4 @@
 .DS_Store
 error.log
+.vscode/
+__pycache__/
