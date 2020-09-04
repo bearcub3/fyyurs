@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, SelectField, SelectMultipleField, DateTimeField
 from wtforms.validators import ValidationError, DataRequired, AnyOf, URL, Length
 import re
@@ -27,7 +27,7 @@ genres_choices = [
 ]
 
 
-class ShowForm(Form):
+class ShowForm(FlaskForm):
     artist_id = StringField(
         'artist_id'
     )
@@ -41,7 +41,7 @@ class ShowForm(Form):
     )
 
 
-class VenueForm(Form):
+class VenueForm(FlaskForm):
     def phone_validator(form, field):
         result = re.compile(r"^[0-9]{3}-[0-9]{3}-[0-9]{4}$")
         if not re.search(result, field.data):
@@ -143,7 +143,7 @@ class VenueForm(Form):
     )
 
 
-class ArtistForm(Form):
+class ArtistForm(FlaskForm):
     def genres_validator(form, field):
         genres = [choice[1] for choice in genres_choices]
         for value in field.data:
@@ -266,7 +266,7 @@ class ArtistForm(Form):
 # Done: IMPLEMENT NEW ARTIST FORM AND NEW SHOW FORM
 
 
-class ShowForm(Form):
+class ShowForm(FlaskForm):
     artist_id = StringField(
         'artist_id'
     )
