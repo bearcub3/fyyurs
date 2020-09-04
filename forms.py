@@ -1,7 +1,7 @@
 from datetime import datetime
 from flask_wtf import Form
-from wtforms import StringField, BooleanField, SelectField, SelectMultipleField, DateTimeField, TextAreaField
-from wtforms.validators import DataRequired, AnyOf, URL, ValidationError, Length
+from wtforms import StringField, TextAreaField, SelectField, SelectMultipleField, DateTimeField
+from wtforms.validators import ValidationError, DataRequired, AnyOf, URL, Length
 import re
 
 genres_choices = [
@@ -136,7 +136,7 @@ class VenueForm(Form):
         'facebook_link', validators=[URL()]
     )
     seeking_talent = SelectField(
-        'seeking_talent', choices=[(False, 'Not currently seeking talent'), (True, 'Currently seeking talent')], coerce=int
+        'seeking_talent', validators=[DataRequired()], choices=[(False, 'Not currently seeking talent'), (True, 'Currently seeking talent')], coerce=int
     )
     seeking_description = TextAreaField(
         'seeking_description', validators=[Length(max=500)]
@@ -217,9 +217,6 @@ class ArtistForm(Form):
             ('WY', 'WY'),
         ]
     )
-    address = StringField(
-        'address', validators=[DataRequired()]
-    )
     phone = StringField(
         # TODO implement validation logic for state
         'phone', validators=[DataRequired()]
@@ -253,20 +250,20 @@ class ArtistForm(Form):
         ]
     )
     facebook_link = StringField(
-        # TODO implement enum restriction
+        # done implement enum restriction
         'facebook_link', validators=[URL()]
     )
     website = StringField(
         'website', validators=[URL()]
     )
     seeking_venue = SelectField(
-        'seeking_venue', choices=[(False, 'Not currently seeking venue'), (True, 'Currently seeking venue')], coerce=int
+        'seeking_venue', validators=[DataRequired()], choices=[(False, 'Not currently seeking venue'), (True, 'Currently seeking venue')], coerce=int
     )
     seeking_description = TextAreaField(
         'seeking_description', validators=[Length(max=500)]
     )
 
-# TODO: IMPLEMENT NEW ARTIST FORM AND NEW SHOW FORM
+# Done: IMPLEMENT NEW ARTIST FORM AND NEW SHOW FORM
 
 
 class ShowForm(Form):
