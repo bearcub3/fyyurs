@@ -1,4 +1,5 @@
 import os
+
 SECRET_KEY = os.urandom(32)
 # Grabs the folder where the script runs.
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -7,7 +8,5 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 DEBUG = True
 
 # Connect to the database
-
-
-# TODO IMPLEMENT DATABASE URL
+# done IMPLEMENT DATABASE URL
 SQLALCHEMY_DATABASE_URI = 'postgres+psycopg2://mrsbinns@localhost:5432/fyyur'
