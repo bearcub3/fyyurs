@@ -402,11 +402,13 @@ def create_artist_submission():
 @app.route('/shows')
 def shows():
     # displays list of shows at /shows
-    # TODO: replace with real venues data.
+    # Done: replace with real venues data.
     #       num_shows should be aggregated based on number of upcoming shows per venue.(DONE)
     data = []
     try:
-        all_shows = db.session.query(Shows).all()
+        all_shows = db.session.query(Shows).filter(
+            Shows.c.start_time > datetime.utcnow()).all()
+
         for show in all_shows:
             artist = Artist.query.filter_by(id=show.artist_id).first()
             venue = Venue.query.filter_by(id=show.venue_id).first()
@@ -417,10 +419,10 @@ def shows():
                 "artist_id": show.artist_id,
                 "artist_name": artist.name,
                 "artist_image_link": artist.image_link,
-                "start_time": show.start_time
+                "start_time": show.start_time.strftime("%d/%m/%Y, %H:%M")
             })
-    except Exception as e:
-        print(e)
+    except Exception as error:
+        print(error)
         pass
 
     return render_template("pages/shows.html", shows=data)
@@ -436,7 +438,7 @@ def create_shows():
 @app.route('/shows/create', methods=['POST'])
 def create_show_submission():
     # called to create new shows in the db, upon submitting new show listing form
-    # TODO: insert form data as a new Show record in the db, instead(DONE)
+    # Done: insert form data as a new Show record in the db, instead(DONE)
     show_form = ShowForm()
 
     artist_id = show_form.artist_id.data
@@ -450,11 +452,11 @@ def create_show_submission():
         db.session.commit()
         # on successful db insert, flash success
         flash("Show was successfully listed!")
-    except Exception as e:
+    except Exception as error:
         flash("An error occurred. Show could not be listed.")
         db.session.rollback()
         db.session.flush()
-        print(e)
+        print(error)
     return render_template("pages/home.html")
 
 
